@@ -1,4 +1,5 @@
 import random
+from termcolor import colored #in order to user termcolor library
 
 def load_word():
     '''
@@ -67,9 +68,9 @@ def spaceman(secret_word):
 
 
     #TODO: show the player information about the game according to the project spec
-
+    print("--------------------------------- Welcome to Space Man ---------------------------------")
     #TODO: Ask the player to guess one letter per round and check that it is only one letter
-
+    user_input("Guess the word: ")
     #TODO: Check if the guessed letter is in the secret or not and give the player feedback
 
     #TODO: show the guessed word so far
@@ -77,6 +78,19 @@ def spaceman(secret_word):
     #TODO: check if the game has been won or lost
 
 
+
+def user_int_input(prompt): #for INT user input
+    user_input = input((colored(prompt, "cyan"))) #grabs user input 
+    while user_input == "" or len(user_input) > 1 or user_input.isdigit() == False: #ensures the input is an integer
+        user_input = input(colored("Please enter a whole number only: ","red", attrs=['bold'])) #ask for user input again
+    return int(user_input) #return the user_input as an integer
+
+def user_input(prompt): #this method will display a message in the terminal and wait for user input
+    user_input = input((colored(prompt, "cyan"))) #user_input will equal to what the user inputted in a string format
+    # while user_input == "" or user_input == " ": #ensures that the user does input a value and not just a blank or space
+    while user_input == "" or len(user_input) > 1 or any(char.isdigit() or char.isspace() for char in user_input): #while user doesn't enter anything OR user enter more than 1 character OR any character in user_input has digit or space, ask the user to change the input
+        user_input = input(colored("Please input 1 letter only: ", "red", attrs=['bold'])) #ask for the input again
+    return user_input #return the user input as a string
 
 
 
