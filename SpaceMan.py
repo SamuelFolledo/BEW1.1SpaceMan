@@ -88,37 +88,43 @@ def spaceman(secret_word): # A function that controls the game of spaceman. Will
     number_of_chars = len(secret_word)
     global chances
     chances = number_of_chars
-    
+    won = False
     # print("\n")
 
 
-    while chances > 0: #while we still have life... keep playing the game
+    while chances > 0 and won == False: #while we still have life and won is false... keep playing the game
 #TODO: Ask the player to guess one letter per round and check that it is only one letter
         guess = user_input("Guess the word: ").upper() #Grabs user input and capitalize it
         while letters_guessed.find(guess) != -1: #if our user use a letter they have used before, then ask the user to try another letter
             guess = user_input(colored("Letter ", "red") +guess+ colored(" has been used before. Please try another letter: ","red")).upper() #Gives a red warning sign, and capitalize the accepted guess
         letters_guessed += guess #append/add our guess to letters_guessed
-        print(letters_guessed)
 
 #TODO: Check if the guessed letter is in the secret or not and give the player feedback
-        if is_guess_in_word(guess, secret_word): #if guessed is in secret_word...
-            print("We have that letter!")
-            get_guessed_word(secret_word, letters_guessed)
-
-        else: #if guess is not in secret_word
+        if is_guess_in_word(guess, secret_word) == False: #if guess does not exist in secret_word, then subtract HP
             print("WRONG!")
             chances -= 1
-            print(chances)
-            
+
+        print("You have "+str(chances)+" chances left") #print lives left
+        for letter in letters_guessed: #print letters guessed
+            print(letter, end=", ")
+        print("\n")
 
 #TODO: show the guessed word so far
+        guessed_word = get_guessed_word(secret_word, letters_guessed) #get our current round's guessed_word
+        print("Guessed word is "+guessed_word+ " Secret word is "+secret_word)
+        for letter in guessed_word:
+            print(letter, end=" ") #prints guessed_word
+        print("\n")
 
-
-
+        if guessed_word == secret_word:
+            print("SAMEE")
+            won = True
 
 #TODO: check if the game has been won or lost
-    
-    print("You lost!")
+    if won == True:
+        print("Congrats! You won!")
+    else:
+        print("You lost")
 
 
 def user_int_input(prompt): #for INT user input
