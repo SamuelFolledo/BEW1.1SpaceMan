@@ -111,27 +111,30 @@ def spaceman(secret_word): # A function that controls the game of spaceman. Will
 
 #TODO: show the guessed word so far
         guessed_word = get_guessed_word(secret_word, letters_guessed) #get our current round's guessed_word
-        print("Guessed word is "+guessed_word+ " Secret word is "+secret_word)
+        # print("Guessed word is "+guessed_word+ " Secret word is "+secret_word)
         for letter in guessed_word:
             print(letter, end=" ") #prints guessed_word
         print("\n")
 
-        if guessed_word == secret_word:
-            print("SAMEE")
+        if guessed_word == secret_word: #if our returned guessed_word is the same as our secret_word, then user won!
             won = True
 
 #TODO: check if the game has been won or lost
     if won == True:
         print("Congrats! You won!")
     else:
-        print("You lost")
+        print("Sorry you lost, the secret word was "+secret_word)
 
+    rematch = user_input("Would you like to play again? Select (y/n): ")
+    while(rematch != "y" or rematch != "Y" or rematch >= "n" or rematch != "N"):
+        rematch = ("Please enter Y for yes to play again, or N if not")
 
-def user_int_input(prompt): #for INT user input
-    user_input = input((colored(prompt, "cyan"))) #grabs user input 
-    while user_input == "" or len(user_input) > 1 or user_input.isdigit() == False: #ensures the input is an integer
-        user_input = input(colored("Please enter a whole number only: ","red", attrs=['bold'])) #ask for user input again
-    return int(user_input) #return the user_input as an integer
+    if rematch == "Y" or user_input == "y":
+        play_again()
+
+def play_again():
+    spaceman(load_word)
+
 
 def user_input(prompt): #this method will display a message in the terminal and wait for user input
     user_input = input((colored(prompt, "cyan"))) #user_input will equal to what the user inputted in a string format
@@ -145,6 +148,4 @@ def user_input(prompt): #this method will display a message in the terminal and 
 
 #These function calls that will start the game
 secret_word = load_word()
-answer = []
-life = 7
 spaceman(secret_word)
