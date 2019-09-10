@@ -39,7 +39,16 @@ def get_guessed_word(secret_word, letters_guessed):
     '''
 
     #TODO: Loop through the letters in secret word and build a string that shows the letters that have been guessed correctly so far that are saved in letters_guessed and underscores for the letters that have not been guessed yet
+    result = ""
+    # if letters_guessed not in secret_word: #if each characters in letters_guessed is not in secret_word, then user got a wrong letter
+    
+    for x in secret_word: #loop through each char in secret_word
+        if x in letters_guessed: 
+            print("Exist")
+        else:
 
+            print("Doesnt exist")
+        
     pass
 
 
@@ -88,14 +97,14 @@ def spaceman(secret_word): # A function that controls the game of spaceman. Will
 #TODO: Ask the player to guess one letter per round and check that it is only one letter
         guess = user_input("Guess the word: ").upper() #Grabs user input and capitalize it
         while letters_guessed.find(guess) != -1: #if our user use a letter they have used before, then ask the user to try another letter
-            guess = user_input(colored("Letter ", "red")+guess+ colored(" has been used before. Please try another letter: ","red")).upper() #
-
+            guess = user_input(colored("Letter ", "red") +guess+ colored(" has been used before. Please try another letter: ","red")).upper() #Gives a red warning sign, and capitalize the accepted guess
         letters_guessed += guess #append/add our guess to letters_guessed
+        print(letters_guessed)
 
 #TODO: Check if the guessed letter is in the secret or not and give the player feedback
         if is_guess_in_word(guess, secret_word): #if guessed is in secret_word...
             print("We have that letter!")
-            # get_guessed_word(secret_word, letters_guessed)
+            get_guessed_word(secret_word, letters_guessed)
 
         else: #if guess is not in secret_word
             print("WRONG!")
