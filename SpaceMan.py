@@ -62,37 +62,43 @@ def is_guess_in_word(guess, secret_word):
 
 
 
-def spaceman(secret_word):
-    '''
-    A function that controls the game of spaceman. Will start spaceman in the command line.
-    Args:
-      secret_word (string): the secret word to guess.
-    '''
+def spaceman(secret_word): # A function that controls the game of spaceman. Will start spaceman in the command line.
 
 #TODO: show the player information about the game according to the project spec
     print("--------------------------------- Welcome to Space Man ---------------------------------")
     print(secret_word)
-    i = 0
+
+    secret_array = [] #will contain our player's progress
+    for char in secret_word:
+        secret_array.append(char)
+    
+    print(secret_array)
+    secret_dic = dict.fromkeys(secret_word, "_") #dict.fromkeys turn each character of a dictionary as a key with an "_" as its value
+    print(secret_dic)
+    for x, y in secret_dic.items():
+        print(x)
+        print(y)
+        # print(secret_dic[x], end = " ")
+
+    # i = 0
     number_of_chars = len(secret_word)
     global chances
     chances = number_of_chars
-    while i < number_of_chars:
-            answer.append("_")
-            i+=1
-    for x in answer:
-        print(x)
+    # while i < number_of_chars:
+    #         answer.append("_")
+    #         i+=1
+    # for x in answer:
+    #     print(x,end=" ")
+    print("\n")
 
 
-
-    while chances > 0:
-        
+    while chances > 0: #while we still have life... keep playing the game
 #TODO: Ask the player to guess one letter per round and check that it is only one letter
         letter = user_input("Guess the word: ")
 
-
 #TODO: Check if the guessed letter is in the secret or not and give the player feedback
         if is_guess_in_word(letter, secret_word): #if guessed is in word...
-            print("We have that letter")
+            print("We have that letter!")
 
         else: #if we dont have that letter
             print("WRONG!")
