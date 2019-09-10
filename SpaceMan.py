@@ -43,13 +43,12 @@ def get_guessed_word(secret_word, letters_guessed):
     # if letters_guessed not in secret_word: #if each characters in letters_guessed is not in secret_word, then user got a wrong letter
     
     for x in secret_word: #loop through each char in secret_word
-        if x in letters_guessed: 
-            print("Exist")
-        else:
+        if x in letters_guessed: #each char in secret_word will be check if it is IN letters_guessed
+            result += x #if x from secret_word does exist in list of letters_guessed, then add it to our result
+        else: #if x doesn't exist in our letters_guessed then append "_"
+            result += "_"
+    return result
 
-            print("Doesnt exist")
-        
-    pass
 
 
 def is_guess_in_word(guess, secret_word):
