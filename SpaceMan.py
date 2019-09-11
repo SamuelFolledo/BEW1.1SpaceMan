@@ -36,7 +36,7 @@ def spaceman(secret_word): # A function that controls the game of spaceman. Will
         chances = len(word)
         won = False
         get_guessed_word(word, letters_guessed) #get guessed word and print our "_" and chances left
-        # print(word)
+        # print("\n"+word)
         while chances > 0 and won == False: #while we still have life and won is false... keep playing the game
     #TODO: Ask the player to guess one letter per round and check that it is only one letter
             guess = user_input("\nGuess the word: ").upper() #Grabs user input and capitalize it
@@ -85,3 +85,4 @@ def play_again():
 #These function calls that will start the game
 secret_word = load_word()
 spaceman(secret_word)
+print("\nThanks for playing Samuel Folledo's Spaceman game 😁")
