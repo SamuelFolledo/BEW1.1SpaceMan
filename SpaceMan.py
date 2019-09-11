@@ -42,9 +42,9 @@ def get_guessed_word(secret_word, letters_guessed):
     result = ""
     # if letters_guessed not in secret_word: #if each characters in letters_guessed is not in secret_word, then user got a wrong letter
     
-    for x in secret_word: #loop through each char in secret_word
-        if x in letters_guessed: #each char in secret_word will be check if it is IN letters_guessed
-            result += x #if x from secret_word does exist in list of letters_guessed, then add it to our result
+    for letter in secret_word: #loop through each char in secret_word
+        if letter in letters_guessed: #each char in secret_word will be check if it is IN letters_guessed
+            result += letter #if x from secret_word does exist in list of letters_guessed, then add it to our result
         else: #if x doesn't exist in our letters_guessed then append "_"
             result += "_"
     return result
@@ -71,69 +71,72 @@ def is_guess_in_word(guess, secret_word):
 
 
 def spaceman(secret_word): # A function that controls the game of spaceman. Will start spaceman in the command line.
-
+    play = True
+    word = secret_word.upper() #capitalize all the letters or secret word
 #TODO: show the player information about the game according to the project spec
-    print("--------------------------------- Welcome to Space Man ---------------------------------")
-    secret_word = secret_word.upper() #capitalize all the letters or secret word
-    print(secret_word)
+    while play:
+        print("--------------------------------- Welcome to Space Man ---------------------------------")
+        print(word)
+        
+        secret_array = [] #will contain our player's progress
+        letters_guessed = ""
+
+        for _ in word: #fill our array with "_"
+            secret_array.append("_")
+        
+
+        # i = 0
+        number_of_chars = len(word)
+        global chances
+        chances = number_of_chars
+        won = False
+        # print("\n")
+
+
+        while chances > 0 and won == False: #while we still have life and won is false... keep playing the game
+    #TODO: Ask the player to guess one letter per round and check that it is only one letter
+            guess = user_input("Guess the word: ").upper() #Grabs user input and capitalize it
+            while letters_guessed.find(guess) != -1: #if our user use a letter they have used before, then ask the user to try another letter
+                guess = user_input(colored("Letter ", "red") +guess+ colored(" has been used before. Please try another letter: ","red")).upper() #Gives a red warning sign, and capitalize the accepted guess
+            letters_guessed += guess #append/add our guess to letters_guessed
+
+    #TODO: Check if the guessed letter is in the secret or not and give the player feedback
+            if is_guess_in_word(guess, word) == False: #if guess does not exist in secret_word, then subtract HP
+                print("WRONG!")
+                chances -= 1
+
+            print("You have "+str(chances)+" chances left") #print lives left
+            for letter in letters_guessed: #print letters guessed
+                print(letter, end=", ")
+            print("\n")
+
+    #TODO: show the guessed word so far
+            guessed_word = get_guessed_word(word, letters_guessed) #get our current round's guessed_word
+            # print("Guessed word is "+guessed_word+ " Secret word is "+secret_word)
+            for letter in guessed_word:
+                print(letter, end=" ") #prints guessed_word
+            print("\n")
+
+            if guessed_word == word: #if our returned guessed_word is the same as our secret_word, then user won!
+                won = True
+
+    #TODO: check if the game has been won or lost
+        if won == True:
+            print("Congrats! You won!")
+        else:
+            print("Sorry you lost, the secret word was "+word)
     
-    secret_array = [] #will contain our player's progress
-    letters_guessed = ""
+        
+    #STRETCH: Rematch
+        rematch = play_again()
+        if rematch == "n" or rematch == "N":
+            play = False
+        else:
+            word = load_word().upper()
 
-    for _ in secret_word: #fill our array with "_"
-        secret_array.append("_")
+
     
 
-    # i = 0
-    number_of_chars = len(secret_word)
-    global chances
-    chances = number_of_chars
-    won = False
-    # print("\n")
-
-
-    while chances > 0 and won == False: #while we still have life and won is false... keep playing the game
-#TODO: Ask the player to guess one letter per round and check that it is only one letter
-        guess = user_input("Guess the word: ").upper() #Grabs user input and capitalize it
-        while letters_guessed.find(guess) != -1: #if our user use a letter they have used before, then ask the user to try another letter
-            guess = user_input(colored("Letter ", "red") +guess+ colored(" has been used before. Please try another letter: ","red")).upper() #Gives a red warning sign, and capitalize the accepted guess
-        letters_guessed += guess #append/add our guess to letters_guessed
-
-#TODO: Check if the guessed letter is in the secret or not and give the player feedback
-        if is_guess_in_word(guess, secret_word) == False: #if guess does not exist in secret_word, then subtract HP
-            print("WRONG!")
-            chances -= 1
-
-        print("You have "+str(chances)+" chances left") #print lives left
-        for letter in letters_guessed: #print letters guessed
-            print(letter, end=", ")
-        print("\n")
-
-#TODO: show the guessed word so far
-        guessed_word = get_guessed_word(secret_word, letters_guessed) #get our current round's guessed_word
-        # print("Guessed word is "+guessed_word+ " Secret word is "+secret_word)
-        for letter in guessed_word:
-            print(letter, end=" ") #prints guessed_word
-        print("\n")
-
-        if guessed_word == secret_word: #if our returned guessed_word is the same as our secret_word, then user won!
-            won = True
-
-#TODO: check if the game has been won or lost
-    if won == True:
-        print("Congrats! You won!")
-    else:
-        print("Sorry you lost, the secret word was "+secret_word)
-
-    rematch = user_input("Would you like to play again? Select (y/n): ")
-    while(rematch != "y" or rematch != "Y" or rematch >= "n" or rematch != "N"):
-        rematch = ("Please enter Y for yes to play again, or N if not")
-
-    if rematch == "Y" or user_input == "y":
-        play_again()
-
-def play_again():
-    spaceman(load_word)
 
 
 def user_input(prompt): #this method will display a message in the terminal and wait for user input
@@ -143,7 +146,12 @@ def user_input(prompt): #this method will display a message in the terminal and 
         user_input = input(colored("Please input 1 letter only: ", "red", attrs=['bold'])) #ask for the input again
     return user_input #return the user input as a string
 
-
+def play_again():
+    rematch = user_input("Would you like to play again? Select (y/n): ")
+    while rematch != "y" and rematch != "Y" and rematch != "n" and rematch != "N":
+        rematch = user_input(colored("Please enter Y for yes to play again, or N if not ", "red"))
+    return rematch
+    
 
 
 #These function calls that will start the game
