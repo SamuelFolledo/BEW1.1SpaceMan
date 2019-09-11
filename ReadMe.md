@@ -9,4 +9,6 @@ Read the [spec here](https://docs.google.com/document/d/1y1WPgJERAuLRJjeSXTf5znj
 
 # To Get Started...
 ## Install Term Color
-### pip3 install termcolor
+```bash
+pip3 install termcolor
+```
