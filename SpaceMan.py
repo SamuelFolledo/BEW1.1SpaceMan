@@ -71,7 +71,7 @@ def spaceman(secret_word): # A function that controls the game of spaceman. Will
 def user_input(prompt): #this method will display a message in the terminal and wait for user input
     user_input = input((colored(prompt, "cyan"))) #user_input will equal to what the user inputted in a string format
     # while user_input == "" or user_input == " ": #ensures that the user does input a value and not just a blank or space
-    while user_input == "" or len(user_input) > 1 or any(char.isdigit() or char.isspace() for char in user_input): #while user doesn't enter anything OR user enter more than 1 character OR any character in user_input has digit or space, ask the user to change the input
+    while user_input == "" or len(user_input) > 1 or any(char.isalpha() == False for char in user_input): #while user doesn't enter anything OR user enter more than 1 character OR any character in user_input has digit or space, ask the user to change the input
         user_input = input(colored("Please input 1 letter only: ", "red", attrs=['bold'])) #ask for the input again
     return user_input #return the user input as a string
 
